@@ -8,7 +8,7 @@ from collections import Counter
 import redis
 import json
 import redis.asyncio
-from config import settings
+from .config import settings
 
 if settings.testing:
     redis_client = redis.asyncio.from_url(settings.REDIS_URL_local, encoding="utf8", decode_responses=True)

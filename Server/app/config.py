@@ -5,7 +5,7 @@ class Settings(BaseSettings):
     API_KEY: str
     REDIS_URL: str
     REDIS_URL_local: str
-    testing: bool = True
+    testing: bool = False
 
     class Config:
         env_file = Path(__file__).parent / ".env"
