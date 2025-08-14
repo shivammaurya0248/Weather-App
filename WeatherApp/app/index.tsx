@@ -109,19 +109,27 @@ export default class MainScreen extends Component {
             const { latitude, longitude } = location.coords;
 
             const address = await Location.reverseGeocodeAsync({ latitude, longitude });
+            // todo add city state and country with postal state to create a unique key for the city
             const city = address[0]?.city || "Unknown City";
             const postalCode = address[0]?.postalCode || null;
+            const country = address[0]?.country || "Unknown Country";
             
+            console.log(address);
+            const cityKey = `${city}-${country}-${postalCode}`;
+            console.log(`Fetching weather data for: ${cityKey}`);
             const currentDate = moment().format('DD-MM-YYYY')
 
             // Fetch all data in parallel once location is available
             const [currentDayWeatherData, forecast5DayData, AQIData, forecast5DayDataHourly] = await Promise.all([
-                getCurrentDayWeather(latitude, longitude, city),
-                get5DayForecast(latitude, longitude, city),
-                getAQI(latitude, longitude, city),
-                get5DayForecastHourly(latitude, longitude, city),
+                getCurrentDayWeather(latitude, longitude, cityKey),
+                get5DayForecast(latitude, longitude, cityKey),
+                getAQI(latitude, longitude, cityKey),
+                get5DayForecastHourly(latitude, longitude, cityKey),
             ]);
-
+            for(let i=0; i < 1000000; i++){
+                // This is a placeholder for any heavy computation or processing that might be needed.
+                // It simulates a delay in processing to ensure the UI remains responsive.
+            }
             this.setState({
                 latitude,
                 longitude,

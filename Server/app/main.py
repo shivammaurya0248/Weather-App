@@ -335,7 +335,7 @@ async def forecast_5_day(lat: float, lon: float, city: str):
         return json.loads(cached)
     forecast_data = await get_5_day_forecast(lat, lon)
     data = transform_5_day_forecast(forecast_data)
-    await redis_client.setex(cache_key, 1800, json.dumps(data))  # 30 minutes
+    await redis_client.setex(cache_key, 7200, json.dumps(data))  # 2 hours
     return data
 
 @app.get("/forecast_5_day_day_night/{lat}/{lon}/{city}")
@@ -346,7 +346,7 @@ async def forecast_5_day_day_night(lat: float, lon: float, city: str):
         return json.loads(cached)
     forecast_data = await get_5_day_forecast(lat, lon)
     data = transform_5_day_forecast_day_night(forecast_data)
-    await redis_client.setex(cache_key, 1800, json.dumps(data))  # 30 minutes
+    await redis_client.setex(cache_key, 7200, json.dumps(data))  # 2 hours
     return data
 
 @app.get("/forecast_5_day_hourly/{lat}/{lon}/{city}")
@@ -357,7 +357,7 @@ async def forecast_5_day_hourly(lat: float, lon: float, city: str):
         return json.loads(cached)
     forecast_data = await get_5_day_forecast(lat, lon)
     data = transform_5_day_forecast_hourly(forecast_data)
-    await redis_client.setex(cache_key, 1800, json.dumps(data))  # 30 minutes
+    await redis_client.setex(cache_key, 7200, json.dumps(data))  # 2 hours
     return data
 
 @app.get("/current_day_weather/{lat}/{lon}/{city}")
@@ -368,7 +368,7 @@ async def current_day_weather(lat: float, lon: float, city: str):
         return json.loads(cached)
     weather_data = await get_current_day_weather(lat, lon)
     data = transform_current_day_weather(weather_data)
-    await redis_client.setex(cache_key, 900, json.dumps(data))  # 15 minutes
+    await redis_client.setex(cache_key, 7200, json.dumps(data))  # 2 hours
     return data
 
 @app.get("/aqi/{lat}/{lon}/{city}")
@@ -379,5 +379,5 @@ async def aqi(lat: float, lon: float, city: str):
         return json.loads(cached)
     aqi_data = await get_aqi(lat, lon)
     data = transform_aqi(aqi_data)
-    await redis_client.setex(cache_key, 900, json.dumps(data))  # 15 minutes
+    await redis_client.setex(cache_key, 7200, json.dumps(data))  # 2 hours
     return data

@@ -213,7 +213,7 @@ import DayInfo from '../Components/DayInfo';
 const styles = StyleSheet.create({
     OuterContainer: {
         flexDirection: 'row',
-        width: 445,
+        width: 550,
         height: 450,
     },
     BackgroundContainer: {
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 80,
         left: -20,
-        width: 500,
+        width: 550,
         height: 30,
         zIndex: 1,
     },
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        width: 500,
+        width: 550,
         height: 400,
         zIndex: 0,
     },
@@ -370,7 +370,7 @@ export default function ForecastScreen() {
                             noOfSections={5}
                             textFontSize={12}
                             textColor="white"
-                            spacing={75}
+                            spacing={95}
                             dataPointLabelTextStyle={{ color: 'white', fontSize: 12 }}
                             textShiftY={5}
                             textShiftX={20}

@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     },
     InnerContainer: {
         backgroundColor: 'rgba(255,255,255,0.1)',
-        width: 70,
+        width: 85,
         marginTop: 10,
         marginHorizontal: 2,
         marginBottom: 20,

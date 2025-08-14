@@ -49,20 +49,21 @@ function getCubicBezierXYatT(start: {x: number, y: number}, c1: {x: number, y: n
 }
 
 function calculateProgress(sunriseProp: string, sunsetProp: string): number {
-    // Expecting props.sunrise and props.sunset as "HH:mm" strings
-    // Parse today's date with the given time
-    const today = moment().format('YYYY-MM-DD');
-    const sunriseStr = `${today} ${sunriseProp}`;
-    const sunsetStr = `${today} ${sunsetProp}`;
-    const sunrise = moment(sunriseStr, 'YYYY-MM-DD HH:mm');
-    const sunset = moment(sunsetStr, 'YYYY-MM-DD HH:mm');
-    
-    if (!sunrise.isValid() || !sunset.isValid()) {
+    // Expecting props.sunrise and props.sunset as "HH:mm" UTC strings
+    const today = moment.utc().format('YYYY-MM-DD');
+    const sunriseUTC = moment.utc(`${today} ${sunriseProp}`, 'YYYY-MM-DD HH:mm');
+    const sunsetUTC = moment.utc(`${today} ${sunsetProp}`, 'YYYY-MM-DD HH:mm');
+
+    if (!sunriseUTC.isValid() || !sunsetUTC.isValid()) {
         // console.log(`Invalid date`);
         return 0;
     }
 
+    // Convert to local time to compare with device's local 'now'
+    const sunrise = sunriseUTC.local();
+    const sunset = sunsetUTC.local();
     const now = moment();
+
     const total_duration = sunset.diff(sunrise, 'minutes');
     const current_duration = now.diff(sunrise, 'minutes');
 
@@ -108,6 +109,14 @@ function SimpleCurve(props: SimpleCurveProps) {
 
 
     let sunPos = getCubicBezierXYatT(start, c1, c2, end, progress);
+
+    const getLocalTime = (utcTime: string) => {
+        if (!utcTime) return '';
+        const today = moment.utc().format('YYYY-MM-DD');
+        const utcMoment = moment.utc(`${today} ${utcTime}`, 'YYYY-MM-DD HH:mm');
+        return utcMoment.isValid() ? utcMoment.local().format('HH:mm') : utcTime;
+    };
+
     return (
         <View style={styles.Container}>
             <View style={{ width, height }}>
@@ -128,10 +137,10 @@ function SimpleCurve(props: SimpleCurveProps) {
             </View>
             <View style={styles.labelContainer}>
                 <Text style={styles.labelText}>
-                    Sunrise <Text style={styles.labelTime}>{props.sunrise}</Text>
+                    Sunrise <Text style={styles.labelTime}>{getLocalTime(props.sunrise)}</Text>
                 </Text>
                 <Text style={styles.labelText}>
-                    Sunset <Text style={styles.labelTime}>{props.sunset}</Text>
+                    Sunset <Text style={styles.labelTime}>{getLocalTime(props.sunset)}</Text>
                 </Text>
             </View>
         </View>

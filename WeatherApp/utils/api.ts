@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-const HOST = 'http://192.168.108.167:8000';
+const HOST = 'https://weatherapp-a9ur.onrender.com';
+// const HOST = 'http://192.168.108.167:8000';
 const API_5_DAY_FORECAST = `/forecast_5_day`;    // Add lat and long to the URL while fetching the data
 const API_5_DAY_FORECAST_HOURLY = '/forecast_5_day_hourly';
 const API_AQI = `/aqi`;       // Add lat and long to the URL while fetching the data 
